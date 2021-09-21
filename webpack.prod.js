@@ -11,13 +11,22 @@ module.exports = {
                 test: '/\.js$/',
                 exclude: /node_modules/,
                 loader: "babel-loader"
-            }
+            },
+            {
+                test: /\.scss$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+            },
         ]
     },
     plugins: [
         new HtmlWebPackPlugin({
             template: "./src/client/views/index.html",
             filename: "./index.html",
-        })
-    ]
+        }),
+        new MiniCssExtractPlugin({ filename: "[name].css"}),
+        new WorkboxPlugin.GenerateSW()
+    ],
+    optimization: {
+        minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})]
+    },
 }
