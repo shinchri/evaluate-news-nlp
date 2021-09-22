@@ -2,30 +2,31 @@ function handleSubmit(event) {
     event.preventDefault()
 
     // check what text was put into the form field
-    let formText = document.getElementById('name').value
+    let formURL = document.getElementById('url').value
 
-    // Client.checkForName(formText)
+    const isValid = Client.checkForUrl(formURL)
+    if(isValid){
+        console.log("::: Form Submitted :::")
+        
+        getKey('http://localhost:8081/api')
+        .then(function(res) {
+            getRequest("https://api.meaningcloud.com/lang-4.0/identification",res.key, formURL)
+            .then(function(res) {
+                document.getElementById('results').innerHTML = "The language used: " + res.language_list[0].name;
+            })
+        })
+    }
+    else {
+        document.getElementById('results').innerHTML = '';
+        alert('The form is not valid');
 
-    console.log("::: Form Submitted :::")
-    //fetch('http://localhost:8081/test')
-    // fetch('https://api.meaningcloud.com/lang-4.0/identification?key=&txt="This is my name"')
-    // .then(res => res.json())
-    // .then(function(res) {
-    //     console.log(res)
-    //     document.getElementById('results').innerHTML = "This";
-    //     //res.message
-    // })
-    getRequest("https://api.meaningcloud.com/lang-4.0/identification","", "This is my name")
-    // .then(res => res.json())
-    .then(function(res) {
-        console.log(res)
-        document.getElementById('results').innerHTML = "This";
-        //res.message
-    })
+    }
+
+    
 }
 
-const getRequest = async(baseURL='', key='', txt='') => {
-    const res = await fetch(baseURL + "&key=" + key + "&txt=" + txt, {
+const getRequest = async(baseURL='', key='', url='') => {
+    const res = await fetch(baseURL + "?key=" + key + "&url=" + url, {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
@@ -34,10 +35,19 @@ const getRequest = async(baseURL='', key='', txt='') => {
     });
     try {
         const data = await res.json();
-        // console.log(data);
         return data;
     } catch(error) {
         console.log("error", error);
+    }
+}
+
+const getKey = async(baseURL='')=> {
+    const res = await fetch(baseURL);
+    try {
+        const data =  await res.json();
+        return data;
+    } catch (error) {
+        console.log('error', error);
     }
 }
 

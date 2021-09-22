@@ -2,7 +2,6 @@ var path = require('path')
 var MeaningCloud = require('meaning-cloud')
 
 const express = require('express')
-const mockAPIResponse = require('./mockAPI.js')
 const dotenv = require('dotenv')
 dotenv.config();
 
@@ -22,7 +21,7 @@ var textapi = new MeaningCloud({
 console.log(__dirname)
 
 app.get('/', function (req, res) {
-    // res.sendFile('dist/index.html')
+    
     res.sendFile(path.resolve('dist/index.html'))
 })
 
@@ -34,4 +33,8 @@ app.listen(8081, function () {
 app.get('/test', function (req, res) {
     // console.log('this')
     res.send(mockAPIResponse)
+})
+
+app.get('/api', function (req, res) {
+    res.send({"key": process.env.API_KEY});
 })
