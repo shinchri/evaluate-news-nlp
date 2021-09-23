@@ -1,2 +1,6 @@
 // Import the js file to test
-import { handleSubmit } from "../src/client/js/formHandler";
+const { handleSubmit } = require("../src/client/js/formHandler");
+
+test("Testing handleSubmit exists", () => {
+    expect(handleSubmit).toBeDefined();
+});
