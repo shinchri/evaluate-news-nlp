@@ -10,14 +10,23 @@ function handleSubmit(event) {
         
         getKey('http://localhost:8081/api')
         .then(function(res) {
-            getRequest("https://api.meaningcloud.com/lang-4.0/identification",res.key, formURL)
+            getRequest("https://api.meaningcloud.com/sentiment-2.1",res.key, formURL)
             .then(function(res) {
-                document.getElementById('results').innerHTML = "The language used: " + res.language_list[0].name;
+                document.getElementById('subjectivity').innerHTML = "Subjectivity: " + res;
+                document.getElementById('irony').innerHTML = "Irony: " + res;
+                document.getElementById('score_tag').innerHTML = "Score Tag: " + res;
+                document.getElementById('agreement').innerHTML = "Agreement: " + res;
+                document.getElementById('confidence').innerHTML = "Confidence: " + res;
+
             })
         })
     }
     else {
-        document.getElementById('results').innerHTML = '';
+        document.getElementById('subjectivity').innerHTML = '';
+        document.getElementById('irony').innerHTML = '';
+        document.getElementById('score_tag').innerHTML = '';
+        document.getElementById('agreement').innerHTML = '';
+        document.getElementById('confidence').innerHTML = '';;
         alert('The form is not valid');
 
     }
@@ -26,7 +35,7 @@ function handleSubmit(event) {
 }
 
 const getRequest = async(baseURL='', key='', url='') => {
-    const res = await fetch(baseURL + "?key=" + key + "&url=" + url, {
+    const res = await fetch(baseURL + "?key=" + key + "&lang=auto&url=" + url, {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
