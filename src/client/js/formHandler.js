@@ -13,6 +13,13 @@ async function handleSubmit(formURL) {
             document.getElementById('confidence').innerHTML = "Confidence: " + res.confidence;
 
         })
+        .catch(error => {
+            console.log("error", error);
+        })
+        
+    })
+    .catch(error => {
+        console.log("error", error);
     })
     
 
