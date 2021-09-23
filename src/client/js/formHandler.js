@@ -12,11 +12,11 @@ function handleSubmit(event) {
         .then(function(res) {
             getRequest("https://api.meaningcloud.com/sentiment-2.1",res.key, formURL)
             .then(function(res) {
-                document.getElementById('subjectivity').innerHTML = "Subjectivity: " + res;
-                document.getElementById('irony').innerHTML = "Irony: " + res;
-                document.getElementById('score_tag').innerHTML = "Score Tag: " + res;
-                document.getElementById('agreement').innerHTML = "Agreement: " + res;
-                document.getElementById('confidence').innerHTML = "Confidence: " + res;
+                document.getElementById('subjectivity').innerHTML = "Subjectivity: " + res.subjectivity;
+                document.getElementById('irony').innerHTML = "Irony: " + res.irony;
+                document.getElementById('score_tag').innerHTML = "Score Tag: " + res.score_tag;
+                document.getElementById('agreement').innerHTML = "Agreement: " + res.agreement;
+                document.getElementById('confidence').innerHTML = "Confidence: " + res.confidence;
 
             })
         })
