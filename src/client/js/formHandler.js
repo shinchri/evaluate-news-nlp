@@ -1,37 +1,22 @@
-function handleSubmit(event) {
-    event.preventDefault()
+async function handleSubmit(formURL) {
 
-    // check what text was put into the form field
-    let formURL = document.getElementById('url').value
-
-    const isValid = Client.checkForUrl(formURL)
-    if(isValid){
-        console.log("::: Form Submitted :::")
-        
-        getKey('http://localhost:8081/api')
-        .then(function(res) {
-            getRequest("https://api.meaningcloud.com/sentiment-2.1",res.key, formURL)
-            .then(function(res) {
-                document.getElementById('subjectivity').innerHTML = "Subjectivity: " + res.subjectivity;
-                document.getElementById('irony').innerHTML = "Irony: " + res.irony;
-                document.getElementById('score_tag').innerHTML = "Score Tag: " + res.score_tag;
-                document.getElementById('agreement').innerHTML = "Agreement: " + res.agreement;
-                document.getElementById('confidence').innerHTML = "Confidence: " + res.confidence;
-
-            })
-        })
-    }
-    else {
-        document.getElementById('subjectivity').innerHTML = '';
-        document.getElementById('irony').innerHTML = '';
-        document.getElementById('score_tag').innerHTML = '';
-        document.getElementById('agreement').innerHTML = '';
-        document.getElementById('confidence').innerHTML = '';;
-        alert('The form is not valid');
-
-    }
-
+    console.log("::: Form Submitted :::")
     
+    getKey('http://localhost:8081/api')
+    .then(function(res) {
+        getRequest("https://api.meaningcloud.com/sentiment-2.1",res.key, formURL)
+        .then(function(res) {
+            document.getElementById('subjectivity').innerHTML = "Subjectivity: " + res.subjectivity;
+            document.getElementById('irony').innerHTML = "Irony: " + res.irony;
+            document.getElementById('score_tag').innerHTML = "Score Tag: " + res.score_tag;
+            document.getElementById('agreement').innerHTML = "Agreement: " + res.agreement;
+            document.getElementById('confidence').innerHTML = "Confidence: " + res.confidence;
+
+        })
+    })
+    
+
+    return "Form Submitted";
 }
 
 const getRequest = async(baseURL='', key='', url='') => {

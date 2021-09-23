@@ -1,5 +1,6 @@
 import { checkForUrl } from './js/urlChecker'
 import { handleSubmit } from './js/formHandler'
+import { handleClick } from './js/handleClick'
 
 import './styles/resets.scss'
 import './styles/base.scss'
@@ -12,5 +13,6 @@ console.log("CHANGE!!");
 
 export {
     checkForUrl,
-    handleSubmit
+    handleSubmit,
+    handleClick
 }
